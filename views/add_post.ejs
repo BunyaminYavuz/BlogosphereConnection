@@ -23,18 +23,27 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <form novalidate>
+        <form novalidate method="post" action="/blogs">
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
-              <label>Post Title</label>
-              <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
+              <label>Blog Title</label>
+              <input type="text" class="form-control" name="title" placeholder="Blog Title" id="name" required data-validation-required-message="Please enter a title.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
+
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
-              <label>Post Detail</label>
-              <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+              <label>Blog Author</label>
+              <input type="text" class="form-control" name="author" placeholder="Blog Author" id="author" required data-validation-required-message="Please enter a title.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Blog Detail</label>
+              <textarea rows="5" class="form-control" name="detail" placeholder="Blog Detail" id="message" required data-validation-required-message="Please enter a detail."></textarea>
               <p class="help-block text-danger"></p>
             </div>
           </div>
