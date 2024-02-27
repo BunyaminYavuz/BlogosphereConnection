@@ -26,7 +26,7 @@
 
         <% blogs.forEach(blog => { %>
         <div class="post-preview">
-          <a href="post.html">
+          <a href="/posts/<%= blog._id %>">
             <h2 class="post-title">
               <%= blog.title %>
             </h2>
@@ -37,7 +37,26 @@
           <p class="post-meta">Posted by
             <a href="#"><%= blog.author %></a>
             <%= new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(blog.dateCreated) %> 
-            </p>
+            <% if (blog.edited) { %>
+              <span class="edited">Edited</span>
+              <% } %>
+          </p>
+
+
+          <!-- Update and Delete Buttons -->
+        <div class="mt-4">
+          <a href="/posts/update/<%= blog._id %>" class="btn btn-primary mr-2">
+            <i class="fas fa-edit"></i> Update
+          </a>
+          <a onclick="return confirm(`Are you sure to delete <%= blog.title.toUpperCase() %>?`)" href="/posts/<%= blog._id %>?_method=DELETE" class="btn btn-danger">
+            <i class="fas fa-trash-alt"></i> Delete
+          </a>
+          <a href="/posts/like/<%= blog._id %>" class="btn btn-secondary">
+            <i class="fas fa-thumbs-up"></i> <%= blog.like %> Likes
+          </a>
+        </div>
+
+        
         </div>
         <% }) %>
         

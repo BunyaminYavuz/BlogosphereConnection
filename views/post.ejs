@@ -11,62 +11,91 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>Man must explore, and this is exploration at its greatest</h1>
-            <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+            <h1><%= post.title %></h1>
+            <h2 class="subheading"><%= post.detail %></h2>
             <span class="meta">Posted by
-              <a href="#">Start Bootstrap</a>
-              on August 24, 2019</span>
+              <a href="#"><%= post.author %></a>
+              <%= new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(post.dateCreated) %></span>
+              <% if (post.edited) { %>
+                <span class="edited">(Edited)</span>
+              <% } %>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Post Content -->
-  <article>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
+<!-- Post Content -->
+<article>
+  <style>
+    /* Stil tanımlamaları */
+    .post-content {
+      position: relative;
+    }
 
-          <p>Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>
+    .post-border {
+      border: 0 solid transparent; /* Başlangıçta çerçeve yok */
+      padding: 20px;
+      background-color: #f4e5d6; /* Taş devri rengi */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Gölgeli kutu */
+    }
 
-          <p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
+    .post-shadow {
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Yazıyı gölgelendir */
+      padding: 10px; /* Gölgelendirme ile çerçeve arasındaki boşluk */
+      background-color: #fff; /* Yazı arkaplan rengi */
+    }
 
-          <p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+    .post-date {
+      position: absolute;
+      bottom: -20px;
+      right: 10px;
+      font-size: 12px;
+      color: #6c757d;
+    }
+  </style>
 
-          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
 
-          <h2 class="section-heading">The Final Frontier</h2>
+        <% if (post.image) { %>
+          <div class="post-image">
+            <img class="img-fluid" src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Post Image">
+          </div>
+        <% } %>
 
-          <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
-
-          <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
-
-          <blockquote class="blockquote">The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
-
-          <p>Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
-
-          <h2 class="section-heading">Reaching for the Stars</h2>
-
-          <p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
-
-          <a href="#">
-            <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
+        <div class="post-content">
+          <div class="post-border">
+            <div class="post-shadow">
+              <i class="fas fa-quote-left"></i>
+              <p><%= post.article %></p>
+              <i class="fas fa-quote-right"></i>
+            </div>
+          </div>
+        </div>
+   
+        <!-- Update and Delete Buttons -->
+        <div class="mt-4">
+          <a href="/posts/update/<%= post._id %>" class="btn btn-primary mr-2">
+            <i class="fas fa-edit"></i> Update
           </a>
-          <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
-
-          <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
-
-          <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
-
-          <p>Placeholder text by
-            <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
-            <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+          <a onclick="return confirm(`Are you sure to delete <%= post.title.toUpperCase() %>?`)" href="/posts/<%= post._id %>?_method=DELETE" class="btn btn-danger">
+            <i class="fas fa-trash-alt"></i> Delete
+          </a>
+          <a href="/posts/like/<%= post._id %>" class="btn btn-secondary">
+            <i class="fas fa-thumbs-up"></i> <%= post.like %> Likes
+          </a>
         </div>
       </div>
     </div>
-  </article>
+  </div>
+</article>
+
+
+
+
 
   <hr>
 
@@ -75,6 +104,9 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>

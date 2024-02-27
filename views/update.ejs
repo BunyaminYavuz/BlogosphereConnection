@@ -12,6 +12,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
             <h1>Add New Post</h1>
+
           </div>
         </div>
       </div>
@@ -22,27 +23,27 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <form enctype="multipart/form-data" novalidate method="post" action="/blogs">
+        <form novalidate method='POST' action="/posts/<%= post._id %>?_method=PUT">
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Blog Title</label>
-              <input type="text" class="form-control" name="title" placeholder="Blog Title" id="name" required data-validation-required-message="Please enter a title." required>
+              <input value="<%= post.title %>" type="text" class="form-control" name="title" placeholder="Blog Title" id="name" required data-validation-required-message="Please enter a title.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
 
-          <div class="control-group">
+          <!-- <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Blog Author</label>
-              <input type="text" class="form-control" name="author" placeholder="Blog Author" id="author" required data-validation-required-message="Please enter a title." required>
+              <input type="text" class="form-control" name="author" placeholder="Blog Author" id="author" required data-validation-required-message="Please enter a title.">
               <p class="help-block text-danger"></p>
             </div>
-          </div>
+          </div> -->
 
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Blog Detail</label>
-              <input type="text" class="form-control" name="detail" placeholder="Blog Detail" id="detail" required data-validation-required-message="Please enter a title." required>
+              <input value="<%= post.detail %>" type="text" class="form-control" name="detail" placeholder="Blog Detail" id="detail" required data-validation-required-message="Please enter a title.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
@@ -50,22 +51,13 @@
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Blog Article</label>
-              <textarea rows="5" class="form-control" name="article" placeholder="Blog Article" id="article" required data-validation-required-message="Please enter a detail." required></textarea>
+              <textarea rows="5" class="form-control" name="article" placeholder="Blog Article" id="article" required data-validation-required-message="Please enter a detail."><%= post.article %></textarea>
               <p class="help-block text-danger"></p>
             </div>
           </div>
-
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Upload Image</label>
-              <input type="file" class="form-control" name="image" accept="image/*" required>
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-
           <br>
           <div id="success"></div>
-          <button type="submit" class="btn btn-primary" id="sendMessageButton">POST</button>
+          <button type="submit" class="btn btn-primary" id="sendMessageButton">Update</button>
         </form>
       </div>
     </div>
